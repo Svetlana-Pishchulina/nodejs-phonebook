@@ -11,6 +11,7 @@ const register = async (req, res, next) => {
     throw new BadRequest(error.message)
   }
   const { email, password, name } = req.body
+  console.log(name)
   // const { email, password } = req.body
   const user = await User.findOne({ email })
   if (user) {
@@ -19,7 +20,7 @@ const register = async (req, res, next) => {
 
   const avatarURL = gravatar.url(email)
   const verifyToken = nanoid()
-  const newUser = await new User({ email, avatarURL, verifyToken })
+  const newUser = await new User({ name, email, avatarURL, verifyToken })
   newUser.setPassword(password)
 
   await newUser.save()
